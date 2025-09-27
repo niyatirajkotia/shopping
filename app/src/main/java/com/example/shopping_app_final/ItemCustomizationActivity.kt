@@ -1,5 +1,5 @@
-// Make sure your package name is correct
 package com.example.shopping_app_final
+
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle

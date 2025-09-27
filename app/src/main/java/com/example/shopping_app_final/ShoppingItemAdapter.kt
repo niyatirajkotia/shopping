@@ -1,4 +1,4 @@
-package com.example.shopping_app_final // Make sure package is correct
+package com.example.shopping_app_final
 
 import android.graphics.Paint
 import android.view.LayoutInflater
