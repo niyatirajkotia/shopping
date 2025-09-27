@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 class MainListAdapter(
     private val shoppingLists: List<ShoppingList>,
-    private val onListClick: (Int) -> Unit // Lambda to handle clicks on a list
+    private val onListClick: (Int) -> Unit
 ) : RecyclerView.Adapter<MainListAdapter.ListViewHolder>() {
 
     class ListViewHolder(view: View) : RecyclerView.ViewHolder(view) {

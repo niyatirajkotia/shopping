@@ -1,4 +1,3 @@
-// Make sure your package name is correct
 package com.example.shopping_app_final
 
 import android.app.Activity
@@ -71,14 +70,12 @@ class ListDetailsActivity : AppCompatActivity() {
     }
 
     private fun setupRecyclerView() {
-        // THE FIX IS HERE: We now pass the onEditClick function
         shoppingItemAdapter = ShoppingItemAdapter(currentItems) { position ->
             launchItemCustomizationActivity(currentItems[position], position)
         }
         itemsRecyclerView.adapter = shoppingItemAdapter
     }
 
-    // This function starts the new edit activity
     private fun launchItemCustomizationActivity(item: ShoppingItem, position: Int) {
         val intent = Intent(this, ItemCustomizationActivity::class.java).apply {
             putExtra("item_idx", position)

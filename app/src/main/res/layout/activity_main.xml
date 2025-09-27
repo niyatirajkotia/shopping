@@ -10,7 +10,7 @@
         android:id="@+id/mainTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50px"
+        android:layout_marginTop="100px"
         android:padding="16dp"
         android:text="My Shopping Lists"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
