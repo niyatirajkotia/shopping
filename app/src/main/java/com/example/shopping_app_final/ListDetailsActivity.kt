@@ -16,7 +16,7 @@ class ListDetailsActivity : AppCompatActivity() {
     private lateinit var newItemEditText: EditText
     private lateinit var addItemButton: Button
     private lateinit var listNameTitle: TextView
-    private lateinit var shoppingItemAdapter: Shopping_Item
+    private lateinit var shoppingItemAdapter: Shopping_item_Adapter
 
     private var currentItems = ArrayList<ShoppingItem>()
 
@@ -60,7 +60,7 @@ class ListDetailsActivity : AppCompatActivity() {
 
     private fun setupRecyclerView() {
         // This was also missing. It creates the adapter and links it to the RecyclerView.
-        shoppingItemAdapter = Shopping_Item(currentItems)
+        shoppingItemAdapter = Shopping_item_Adapter(currentItems)
         itemsRecyclerView.adapter = shoppingItemAdapter
     }
 }
