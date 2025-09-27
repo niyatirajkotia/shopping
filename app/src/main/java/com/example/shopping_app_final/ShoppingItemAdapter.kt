@@ -9,10 +9,10 @@ import android.widget.CheckBox
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class Shopping_item_Adapter(
+class ShoppingItemAdapter(
     private val shoppingItems: ArrayList<ShoppingItem>,
     private val onEditClick: (Int) -> Unit
-) : RecyclerView.Adapter<Shopping_item_Adapter.ItemViewHolder>() {
+) : RecyclerView.Adapter<ShoppingItemAdapter.ItemViewHolder>() {
 
     class ItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val checkBox: CheckBox = view.findViewById(R.id.itemCheckBox)

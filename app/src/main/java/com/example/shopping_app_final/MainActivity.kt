@@ -10,7 +10,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 
-// Make sure this class name matches your file name (MainActivity)
 class MainActivity : AppCompatActivity() {
 
     private lateinit var mainRecyclerView: RecyclerView
@@ -22,19 +21,14 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // This must match your layout file name
         setContentView(R.layout.activity_main)
-
         mainRecyclerView = findViewById(R.id.mainRecyclerView)
         newListNameEditText = findViewById(R.id.newListNameEditText)
         addListButton = findViewById(R.id.addListButton)
-
         if (allShoppingLists.isEmpty()) {
             addSampleData()
         }
-
         setupRecyclerView()
-
         addListButton.setOnClickListener {
             val listName = newListNameEditText.text.toString()
             if (listName.isNotBlank()) {
@@ -58,7 +52,7 @@ class MainActivity : AppCompatActivity() {
     private val listDetailsLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
             val data: Intent? = result.data
-            val updatedIndex = data?.getIntExtra("UPDATED_LIST_INDEX", -1) ?: -1
+            val updatedIndex = data?.getIntExtra("UPDATED_list_idx", -1) ?: -1
 
             if (updatedIndex != -1) {
                 mainListAdapter.notifyItemChanged(updatedIndex)
@@ -71,11 +65,9 @@ class MainActivity : AppCompatActivity() {
         val selectedList = allShoppingLists[position]
         DataManager.currentShoppingItems = selectedList.items
 
-        // IMPORTANT: You need to create ListDetailsActivity for this to work.
-        // For now, Android Studio will show an error on "ListDetailsActivity". That is OKAY.
-        val intent = Intent(this, ListDeatailsActivity::class.java).apply {
-            putExtra("LIST_NAME", selectedList.name)
-            putExtra("LIST_INDEX", position)
+        val intent = Intent(this, ListDetailsActivity::class.java).apply {
+            putExtra("list_name", selectedList.name)
+            putExtra("list_idx", position)
         }
         listDetailsLauncher.launch(intent)
     }

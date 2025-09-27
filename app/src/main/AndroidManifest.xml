@@ -16,7 +16,7 @@
             android:name=".ItemCustomizationActivity"
             android:exported="false" />
         <activity
-            android:name=".ListDeatailsActivity"
+            android:name=".ListDetailsActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
