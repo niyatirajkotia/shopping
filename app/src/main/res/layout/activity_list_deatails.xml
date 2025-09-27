@@ -10,6 +10,7 @@
         android:id="@+id/listNameTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="50px"
         android:padding="16dp"
         android:text="Shopping List Name"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
@@ -43,6 +44,7 @@
             android:id="@+id/newItemEditText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="100px"
             android:layout_weight="1"
             android:hint="Enter item name"
             android:inputType="textCapWords" />
