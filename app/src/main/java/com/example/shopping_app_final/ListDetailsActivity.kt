@@ -1,3 +1,4 @@
+// Make sure your package name is correct
 package com.example.shopping_app_final
 
 import android.app.Activity
@@ -7,10 +8,12 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 
-class ListDetailsActivity : AppCompatActivity() {
+// Your class name
+class ListDeatailsActivity : AppCompatActivity() {
 
     private lateinit var itemsRecyclerView: RecyclerView
     private lateinit var newItemEditText: EditText
@@ -20,9 +23,36 @@ class ListDetailsActivity : AppCompatActivity() {
 
     private var currentItems = ArrayList<ShoppingItem>()
 
+    // This launcher handles the result from your edit screen
+    private val editItemLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val data: Intent? = result.data
+            val index = data?.getIntExtra("UPDATED_ITEM_INDEX", -1) ?: -1
+
+            if (index != -1) {
+                // Get the updated data from the result
+                val name = data!!.getStringExtra("UPDATED_ITEM_NAME") ?: ""
+                val description = data.getStringExtra("UPDATED_ITEM_DESCRIPTION") ?: ""
+                val quantity = data.getIntExtra("UPDATED_ITEM_QUANTITY", 1)
+
+                // Update the item in our list
+                val itemToUpdate = currentItems[index]
+
+                // --- THIS IS THE FIX ---
+                itemToUpdate.name = name // Add this line
+
+                itemToUpdate.description = description
+                itemToUpdate.quantity = quantity
+
+                // Refresh the list to show the changes
+                shoppingItemAdapter.notifyItemChanged(index)
+            }
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_list_deatails) // This should be your layout file name
+        setContentView(R.layout.activity_list_deatails)
 
         itemsRecyclerView = findViewById(R.id.itemsRecyclerView)
         newItemEditText = findViewById(R.id.newItemEditText)
@@ -33,13 +63,10 @@ class ListDetailsActivity : AppCompatActivity() {
         val listIndex = intent.getIntExtra("LIST_INDEX", -1)
         listNameTitle.text = listName
 
-        // This is the crucial part that was missing. It gets the data.
         currentItems = DataManager.currentShoppingItems ?: arrayListOf()
 
-        // This part connects your data to the visual list.
         setupRecyclerView()
 
-        // This part handles the "Add" button clicks.
         addItemButton.setOnClickListener {
             val itemName = newItemEditText.text.toString()
             if (itemName.isNotBlank()) {
@@ -52,17 +79,27 @@ class ListDetailsActivity : AppCompatActivity() {
             }
         }
 
-        // This part sets up the result to send back to the main screen.
         val resultIntent = Intent()
         resultIntent.putExtra("UPDATED_LIST_INDEX", listIndex)
         setResult(Activity.RESULT_OK, resultIntent)
     }
 
     private fun setupRecyclerView() {
-        // This was also missing. It creates the adapter and links it to the RecyclerView.
-        shoppingItemAdapter = Shopping_item_Adapter(currentItems)
+        // THE FIX IS HERE: We now pass the onEditClick function
+        shoppingItemAdapter = Shopping_item_Adapter(currentItems) { position ->
+            launchItemCustomizationActivity(currentItems[position], position)
+        }
         itemsRecyclerView.adapter = shoppingItemAdapter
     }
+
+    // This function starts the new edit activity
+    private fun launchItemCustomizationActivity(item: ShoppingItem, position: Int) {
+        val intent = Intent(this, ItemCustomizationActivity::class.java).apply {
+            putExtra("ITEM_INDEX", position)
+            putExtra("ITEM_NAME", item.name)
+            putExtra("ITEM_DESCRIPTION", item.description)
+            putExtra("ITEM_QUANTITY", item.quantity)
+        }
+        editItemLauncher.launch(intent)
+    }
 }
-
-

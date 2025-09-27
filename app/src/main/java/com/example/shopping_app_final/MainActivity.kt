@@ -73,7 +73,7 @@ class MainActivity : AppCompatActivity() {
 
         // IMPORTANT: You need to create ListDetailsActivity for this to work.
         // For now, Android Studio will show an error on "ListDetailsActivity". That is OKAY.
-        val intent = Intent(this, ListDetailsActivity::class.java).apply {
+        val intent = Intent(this, ListDeatailsActivity::class.java).apply {
             putExtra("LIST_NAME", selectedList.name)
             putExtra("LIST_INDEX", position)
         }
